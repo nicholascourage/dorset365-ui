@@ -299,7 +299,7 @@
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
                                         <NuxtLink to="/" class="nav-link active">
-                                            Home
+                                            Events
                                             <i class="fas fa-angle-down"></i>
                                         </NuxtLink>
                                         <ul class="dropdown-menu">
@@ -313,7 +313,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            Tours
+                                            Sports
                                             <i class="fas fa-angle-down"></i>
                                         </a>
                                         <ul class="dropdown-menu">
@@ -336,7 +336,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            Flights
+                                            Festivals
                                             <i class="fas fa-angle-down"></i>
                                         </a>
                                         <ul class="dropdown-menu">
@@ -352,7 +352,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            Hotel
+                                            Concerts
                                             <i class="fas fa-angle-down"></i>
                                         </a>
                                         <ul class="dropdown-menu">
@@ -375,7 +375,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            Pages
+                                            Places
                                             <i class="fas fa-angle-down"></i>
                                         </a>
                                         <ul class="dropdown-menu">

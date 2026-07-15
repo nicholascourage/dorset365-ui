@@ -54,7 +54,7 @@
                                 <div class="container">
                                     <div class="logo">
                                         <NuxtLink to="/">
-                                            <img src="../assets/img/logo.png" alt="logo">
+                                            <img :src="logoUrl" alt="Dorset365">
                                         </NuxtLink>
                                     </div>
                                     <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
@@ -292,7 +292,7 @@
                     <div class="container">
                         <nav class="navbar navbar-expand-md navbar-light">
                             <NuxtLink class="navbar-brand" to="/">
-                                <img src="../assets/img/logo.png" alt="logo">
+                                <img :src="logoUrl" alt="Dorset365">
                             </NuxtLink>
 
                             <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
@@ -487,8 +487,7 @@
                                 </ul>
                                 <div class="others-options d-flex align-items-center">
                                     <div class="option-item">
-                                        <NuxtLink to="/company/become-vendor" class="btn  btn_navber">Become a
-                                            partner</NuxtLink>
+                                        <NuxtLink to="/company/become-vendor" class="btn btn_navber">Advertise</NuxtLink>
                                     </div>
                                 </div>
                             </div>
@@ -516,10 +515,13 @@
     </div>
 </template>
 <script>
+import logoUrl from '@/assets/img/dorset365.com-logo.svg'
+
 export default {
     name: 'Header',
     data() {
         return {
+            logoUrl,
             language: 'English',
             currency: 'USD',
             isSticky: false,

@@ -23,5 +23,21 @@ export default defineNuxtConfig({
     server: {
       allowedHosts: ['dorset365.local']
     }
-  }
+  },
+
+  modules: ['nuxt-auth-sanctum'],
+
+  sanctum: {
+    baseUrl: process.env.NUXT_PUBLIC_API_BASE || 'http://api.dorset365.local',
+    origin: process.env.NUXT_PUBLIC_FRONTEND_URL || 'http://dorset365.local',
+    endpoints: {
+      user: '/user/confirmed-password-status'
+    },
+    redirect: {
+      onLogin: '/dashboard',
+      onLogout: '/auth/login',
+      onAuthOnly: '/auth/login'
+    }
+  },
+
 })

@@ -10,16 +10,25 @@
                             <h2>Logged in to stay in touch</h2>
                         </div>
                         <div class="common_author_form">
-                            <form action="#" id="main_author_form">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Enter user name" />
+                            <form id="main_author_form" @submit.prevent="submitLogin">
+                                <div v-if="errorMessage" class="alert alert-danger" role="alert">
+                                    {{ errorMessage }}
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Enter password" />
+                                    <input v-model.trim="form.email" type="email" class="form-control"
+                                        placeholder="Enter email address" autocomplete="email" required />
+                                    <small v-if="fieldErrors.email" class="text-danger">{{ fieldErrors.email }}</small>
+                                </div>
+                                <div class="form-group">
+                                    <input v-model="form.password" type="password" class="form-control"
+                                        placeholder="Enter password" autocomplete="current-password" required />
+                                    <small v-if="fieldErrors.password" class="text-danger">{{ fieldErrors.password }}</small>
                                     <NuxtLink to="/auth/forgot-password">Forgot password?</NuxtLink>
                                 </div>
                                 <div class="common_form_submit">
-                                    <button class="btn btn_theme btn_md">Log in</button>
+                                    <button class="btn btn_theme btn_md" type="submit" :disabled="isSubmitting">
+                                        {{ isSubmitting ? 'Logging in...' : 'Log in' }}
+                                    </button>
                                 </div>
                                 <div class="have_acount_area">
                                     <p>Dont have an account? <NuxtLink to="/auth/register">Register now</NuxtLink></p>
@@ -33,9 +42,72 @@
     </section>
 </template>
     
-<script>
+<script setup>
+defineOptions({
+    name: 'CommonAuthorFour',
+})
 
-export default {
-    name: "CommonAuthorFour"
-};
+const { login } = useSanctumAuth()
+
+const form = reactive({
+    email: '',
+    password: '',
+})
+
+const fieldErrors = reactive({})
+const errorMessage = ref('')
+const isSubmitting = ref(false)
+
+const clearFieldErrors = () => {
+    Object.keys(fieldErrors).forEach((key) => {
+        delete fieldErrors[key]
+    })
+}
+
+const setFieldErrors = (errors = {}) => {
+    clearFieldErrors()
+
+    Object.entries(errors).forEach(([field, messages]) => {
+        fieldErrors[field] = Array.isArray(messages) ? messages[0] : messages
+    })
+}
+
+const getErrorMessage = (error) => {
+    if (error?.data?.message) {
+        return error.data.message
+    }
+
+    if (error?.message) {
+        return error.message
+    }
+
+    return 'Login failed. Please check your browser Network tab for the Laravel Sanctum response.'
+}
+
+const submitLogin = async () => {
+    clearFieldErrors()
+    errorMessage.value = ''
+    isSubmitting.value = true
+
+    try {
+        await login(
+            {
+                email: form.email,
+                password: form.password,
+            },
+            true,
+            {
+                headers: {
+                    Accept: 'application/json',
+                },
+            },
+        )
+    } catch (error) {
+        const data = error?.data || {}
+        setFieldErrors(data.errors)
+        errorMessage.value = getErrorMessage(error)
+    } finally {
+        isSubmitting.value = false
+    }
+}
 </script>

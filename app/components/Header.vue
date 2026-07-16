@@ -19,8 +19,11 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <ul class="topbar-others-options">
-                                <li><NuxtLink to="/auth/login">Login</NuxtLink></li>
-                                <li><NuxtLink to="/auth/register">Sign up</NuxtLink></li>
+                                <li v-if="!isAuthenticated"><NuxtLink to="/auth/login">Login</NuxtLink></li>
+                                <li v-if="!isAuthenticated"><NuxtLink to="/auth/register">Sign up</NuxtLink></li>
+                                <li v-if="isAuthenticated">
+                                    <button type="button" class="logout-link" @click="logout">Logout</button>
+                                </li>
                                 <li>
                                     <div class="dropdown language-option">
                                         <select v-model="language">
@@ -199,13 +202,17 @@
                                                             Pages</a>
                                                         <ul class="dropdown-menu shadow">
 
-                                                            <li class="nav-item">
+                                                            <li v-if="!isAuthenticated" class="nav-item">
                                                                 <NuxtLink to="/auth/login"
                                                                     class="dropdown-item">Login</NuxtLink>
                                                             </li>
-                                                            <li class="nav-item">
+                                                            <li v-if="!isAuthenticated" class="nav-item">
                                                                 <NuxtLink to="/auth/register"
                                                                     class="dropdown-item">Register</NuxtLink>
+                                                            </li>
+                                                            <li v-if="isAuthenticated" class="nav-item">
+                                                                <button type="button" class="dropdown-item logout-link"
+                                                                    @click="logout">Logout</button>
                                                             </li>
                                                             <li class="nav-item">
                                                                 <NuxtLink to="/auth/forgot-password"
@@ -415,12 +422,16 @@
                                             <li class="nav-item">
                                                 <a to="#" class="nav-link">User Pages</a>
                                                 <ul class="dropdown-menu">
-                                                    <li class="nav-item">
+                                                    <li v-if="!isAuthenticated" class="nav-item">
                                                         <NuxtLink to="/auth/login" class="nav-link">Login</NuxtLink>
                                                     </li>
-                                                    <li class="nav-item">
+                                                    <li v-if="!isAuthenticated" class="nav-item">
                                                         <NuxtLink to="/auth/register"
                                                             class="nav-link">Register</NuxtLink>
+                                                    </li>
+                                                    <li v-if="isAuthenticated" class="nav-item">
+                                                        <button type="button" class="nav-link logout-link"
+                                                            @click="logout">Logout</button>
                                                     </li>
                                                     <li class="nav-item">
                                                         <NuxtLink to="/auth/forgot-password" class="nav-link">Forget
@@ -519,6 +530,14 @@ import logoUrl from '@/assets/img/dorset365.com-logo.svg'
 
 export default {
     name: 'Header',
+    setup() {
+        const { isAuthenticated, logout } = useSanctumAuth()
+
+        return {
+            isAuthenticated,
+            logout,
+        }
+    },
     data() {
         return {
             logoUrl,

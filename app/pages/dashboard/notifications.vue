@@ -9,7 +9,11 @@
 
 </template>
 
-
+<script setup>
+definePageMeta({
+    middleware: ['sanctum:auth'],
+})
+</script>
 
 <script>
 import NBanner from '@/components/dashboard/NBanner.vue'

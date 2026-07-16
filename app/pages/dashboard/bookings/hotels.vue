@@ -7,6 +7,12 @@
     <HotelBookingDashboard />
 
 </template>
+<script setup>
+definePageMeta({
+    middleware: ['sanctum:auth'],
+})
+</script>
+
 <script>
 
 import HotelBookingBanner from '@/components/dashboard/HotelBookingBanner.vue'

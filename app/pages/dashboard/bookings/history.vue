@@ -11,6 +11,12 @@
 
 
 </template>
+<script setup>
+definePageMeta({
+    middleware: ['sanctum:auth'],
+})
+</script>
+
 <script>
 import BookingHistoryBanner from '@/components/dashboard/BookingHistoryBanner.vue'
 import BookingHistoryDashboard from '@/components/dashboard/BookingHistoryDashboard.vue'

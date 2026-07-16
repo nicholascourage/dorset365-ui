@@ -11,6 +11,12 @@
 
 
 </template>
+<script setup>
+definePageMeta({
+    middleware: ['sanctum:auth'],
+})
+</script>
+
 <script>
 import DashboardBanner from '@/components/dashboard/DashboardBanner.vue'
 import DashboardArea from '@/components/dashboard/DashboardArea.vue'

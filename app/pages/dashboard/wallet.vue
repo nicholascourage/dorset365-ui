@@ -10,6 +10,12 @@
      <Cta />
 
 </template>
+<script setup>
+definePageMeta({
+    middleware: ['sanctum:auth'],
+})
+</script>
+
 <script>
 
 import WalletBanner from '@/components/dashboard/WalletBanner.vue'

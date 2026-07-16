@@ -10,6 +10,12 @@
     <Cta />
 
 </template>
+<script setup>
+definePageMeta({
+    middleware: ['sanctum:auth'],
+})
+</script>
+
 <script>
 
 import MyProfileBanner from '@/components/dashboard/MyProfileBanner.vue'

@@ -10,6 +10,12 @@
     <Cta />
 
 </template>
+<script setup>
+definePageMeta({
+    middleware: ['sanctum:auth'],
+})
+</script>
+
 <script>
 import FlightBanner from '@/components/dashboard/FlightBanner.vue'
 import FlightDashboard from '@/components/dashboard/FlightDashboard.vue'

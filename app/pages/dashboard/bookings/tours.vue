@@ -10,6 +10,12 @@
     <Cta />
 
 </template>
+<script setup>
+definePageMeta({
+    middleware: ['sanctum:auth'],
+})
+</script>
+
 <script>
 
 import TourBookingBanner from '@/components/dashboard/TourBookingBanner.vue'

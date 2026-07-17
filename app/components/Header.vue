@@ -61,7 +61,8 @@
                                         </NuxtLink>
                                     </div>
                                     <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#navbar-content">
+                                        data-bs-target="#navbar-content" aria-controls="navbar-content"
+                                        aria-expanded="false" aria-label="Toggle navigation">
                                         <div class="hamburger-toggle">
                                             <div class="hamburger">
                                                 <span></span>
@@ -73,9 +74,8 @@
                                     <div class="collapse navbar-collapse mean-nav" id="navbar-content">
                                         <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                                             <li class="nav-item dropdown">
-                                                <NuxtLink to="/" class="dropdown-item dropdown-toggle"
-                                                    data-bs-toggle="dropdown"
-                                                    data-bs-auto-close="outside">Home</NuxtLink>
+                                                <button type="button" class="dropdown-item dropdown-toggle"
+                                                    data-bs-toggle="dropdown" data-bs-auto-close="outside">Home</button>
                                                 <ul class="dropdown-menu shadow">
                                                     <li class="nav-item">
                                                         <NuxtLink to="/" class="dropdown-item">Home One</NuxtLink>
@@ -87,9 +87,8 @@
                                                 </ul>
                                             </li>
                                             <li class="nav-item dropdown">
-                                                <NuxtLink to="/" class="dropdown-item dropdown-toggle"
-                                                    data-bs-toggle="dropdown"
-                                                    data-bs-auto-close="outside">Tours</NuxtLink>
+                                                <button type="button" class="dropdown-item dropdown-toggle"
+                                                    data-bs-toggle="dropdown" data-bs-auto-close="outside">Tours</button>
                                                 <ul class="dropdown-menu shadow">
                                                     <li class="nav-item">
                                                         <NuxtLink to="/tours"
@@ -111,9 +110,8 @@
                                                 </ul>
                                             </li>
                                             <li class="nav-item dropdown">
-                                                <NuxtLink to="/" class="dropdown-item dropdown-toggle"
-                                                    data-bs-toggle="dropdown"
-                                                    data-bs-auto-close="outside">Flights</NuxtLink>
+                                                <button type="button" class="dropdown-item dropdown-toggle"
+                                                    data-bs-toggle="dropdown" data-bs-auto-close="outside">Flights</button>
                                                 <ul class="dropdown-menu shadow">
                                                     <li class="nav-item">
                                                         <NuxtLink to="/flights/search-results"
@@ -127,9 +125,9 @@
                                                 </ul>
                                             </li>
                                             <li class="nav-item dropdown">
-                                                <NuxtLink to="/" class="dropdown-item dropdown-toggle"
+                                                <button type="button" class="dropdown-item dropdown-toggle"
                                                     data-bs-toggle="dropdown" data-bs-auto-close="outside">Hotel
-                                                </NuxtLink>
+                                                </button>
                                                 <ul class="dropdown-menu shadow">
                                                     <li class="nav-item">
                                                         <NuxtLink to="/hotels"
@@ -289,6 +287,18 @@
                                                 <NuxtLink to="/company/contact" class="dropdown-item">Contact</NuxtLink>
                                             </li>
                                         </ul>
+                                        <div class="mobile-nav-actions">
+                                            <NuxtLink v-if="!isAuthenticated" to="/auth/login"
+                                                class="mobile-auth-action">Login</NuxtLink>
+                                            <NuxtLink v-if="!isAuthenticated" to="/auth/register"
+                                                class="mobile-auth-action mobile-auth-action-primary">Sign up</NuxtLink>
+                                            <NuxtLink v-if="isAuthenticated" to="/dashboard"
+                                                class="mobile-auth-action mobile-auth-action-primary">Dashboard</NuxtLink>
+                                            <button v-if="isAuthenticated" type="button" class="mobile-auth-action"
+                                                @click="handleMobileLogout">Logout</button>
+                                            <NuxtLink to="/company/become-vendor"
+                                                class="mobile-auth-action mobile-auth-action-secondary">Advertise</NuxtLink>
+                                        </div>
                                     </div>
                                 </div>
                             </nav>
@@ -547,22 +557,63 @@ export default {
         }
     },
 
-    mounted() {
-        window.addEventListener('scroll', () => {
-            let scroll = window.scrollY
-            if (scroll >= 200) {
-                this.isSticky = true
-            } else {
-                this.isSticky = false
-            }
-        })
+    methods: {
+        handleScroll() {
+            this.isSticky = window.scrollY >= 200
+        },
+        closeMobileMenu() {
+            const navbarContent = document.getElementById('navbar-content')
+            const hamburger = document.querySelector('.hamburger-toggle .hamburger')
+            const toggler = document.querySelector('.navbar-toggler')
 
-        document.addEventListener('click', function (e) {
-            // Hamburger menu
-            if (e.target.classList.contains('hamburger-toggle')) {
-                e.target.children[0].classList.toggle('active');
+            if (!navbarContent) {
+                return
             }
-        })
+
+            if (window.bootstrap?.Collapse) {
+                const collapse = window.bootstrap.Collapse.getOrCreateInstance(navbarContent, {
+                    toggle: false,
+                })
+                collapse.hide()
+            } else {
+                navbarContent.classList.remove('show')
+            }
+
+            hamburger?.classList.remove('active')
+            toggler?.classList.add('collapsed')
+            toggler?.setAttribute('aria-expanded', 'false')
+        },
+        handleDocumentClick(e) {
+            const hamburgerToggle = e.target.closest('.hamburger-toggle')
+
+            if (hamburgerToggle) {
+                hamburgerToggle.querySelector('.hamburger')?.classList.toggle('active')
+                return
+            }
+
+            const mobileDestination = e.target.closest(
+                '#navbar-content a:not(.dropdown-toggle), #navbar-content .mobile-auth-action',
+            )
+
+            if (mobileDestination) {
+                this.closeMobileMenu()
+            }
+        },
+        async handleMobileLogout() {
+            await this.logout()
+            this.closeMobileMenu()
+        },
+    },
+
+    mounted() {
+        this.handleScroll()
+        window.addEventListener('scroll', this.handleScroll)
+        document.addEventListener('click', this.handleDocumentClick)
+    },
+
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll)
+        document.removeEventListener('click', this.handleDocumentClick)
     }
 }
 </script>

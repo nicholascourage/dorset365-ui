@@ -5591,3 +5591,248 @@ textarea {
 .dashboard_menu_area ul li:last-child {
     margin-bottom: 20px;
 }
+
+/* Mobile navigation refresh */
+@media only screen and (max-width: 1199px) {
+    .topbar-area {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .navbar-area {
+        padding: 10px 0;
+        box-shadow: 0 14px 32px rgba(11, 7, 23, 0.18);
+    }
+
+    .main-responsive-nav .navbar {
+        padding: 0;
+    }
+
+    .main-responsive-nav .navbar>.container {
+        position: relative;
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .main-responsive-nav .logo {
+        width: auto !important;
+    }
+
+    .main-responsive-nav .logo img {
+        width: 138px;
+        max-height: 56px;
+    }
+
+    .navbar-toggler {
+        width: 46px;
+        height: 46px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar-toggler:focus-visible {
+        outline: 3px solid rgba(91, 213, 185, 0.45);
+        outline-offset: 2px;
+    }
+
+    .navbar-toggler .hamburger-toggle {
+        width: 28px;
+        height: 28px;
+    }
+
+    .navbar-toggler .hamburger-toggle .hamburger {
+        width: 24px;
+        height: 20px;
+    }
+
+    .navbar-toggler .hamburger-toggle .hamburger span {
+        width: 100%;
+        height: 2px;
+        background: #fff;
+        border-radius: 999px;
+    }
+
+    #navbar-content {
+        position: absolute;
+        top: calc(100% + 12px);
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-height: calc(100vh - 118px);
+        overflow-y: auto;
+        z-index: 10000;
+        padding: 10px;
+        background: #ffffff;
+        border: 1px solid rgba(30, 19, 52, 0.08);
+        border-radius: 8px;
+        box-shadow: 0 22px 55px rgba(11, 7, 23, 0.24);
+    }
+
+    #navbar-content .navbar-nav {
+        height: auto;
+        max-height: none;
+        overflow: visible;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    #navbar-content .nav-item {
+        width: 100%;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    #navbar-content .nav-item:last-child {
+        border-bottom: 0;
+    }
+
+    #navbar-content .dropdown-item,
+    #navbar-content .nav-link {
+        width: 100%;
+        min-height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 10px;
+        color: var(--black-color);
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.25;
+        text-align: left;
+        white-space: normal;
+    }
+
+    #navbar-content .dropdown-item:hover,
+    #navbar-content .dropdown-item:focus,
+    #navbar-content .nav-link:hover,
+    #navbar-content .nav-link:focus {
+        color: var(--main-color);
+        background: #f4f7fb;
+    }
+
+    #navbar-content .dropdown-toggle::after {
+        margin-left: auto;
+        color: #5bd5b9;
+        transition: transform 0.2s ease;
+    }
+
+    #navbar-content .dropdown-toggle.show::after,
+    #navbar-content .show>.dropdown-toggle::after {
+        transform: rotate(180deg);
+    }
+
+    #navbar-content .dropdown-menu {
+        position: static !important;
+        transform: none !important;
+        width: 100%;
+        min-width: 0;
+        display: none;
+        padding: 4px 0 8px 10px;
+        margin: 0;
+        border: 0;
+        border-left: 2px solid #5bd5b9;
+        border-radius: 0;
+        background: #f8fafc;
+        box-shadow: none !important;
+    }
+
+    #navbar-content .dropdown-menu.show {
+        display: block;
+        animation: fadeIn 0.18s ease-in-out;
+    }
+
+    #navbar-content .dropdown-menu .nav-item {
+        border-bottom: 0;
+    }
+
+    #navbar-content .dropdown-menu .dropdown-item,
+    #navbar-content .dropdown-menu .nav-link {
+        min-height: 40px;
+        padding: 10px 12px;
+        color: #4b5563;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    #navbar-content .dropdown-menu .dropdown-menu {
+        margin-left: 4px;
+        padding-left: 8px;
+        background: #fff;
+        border-left-color: rgba(30, 19, 52, 0.18);
+    }
+
+    .mobile-nav-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding-top: 12px;
+        margin-top: 8px;
+        border-top: 1px solid #edf0f4;
+    }
+
+    .mobile-auth-action {
+        min-height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 12px;
+        border: 1px solid #d8dde7;
+        border-radius: 6px;
+        background: #fff;
+        color: var(--main-color);
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .mobile-auth-action:hover,
+    .mobile-auth-action:focus {
+        color: var(--main-color);
+        border-color: #5bd5b9;
+        background: #eefcf8;
+    }
+
+    .mobile-auth-action-primary {
+        color: #fff;
+        border-color: var(--main-color);
+        background: var(--main-color);
+    }
+
+    .mobile-auth-action-primary:hover,
+    .mobile-auth-action-primary:focus {
+        color: #fff;
+        border-color: #2b2540;
+        background: #2b2540;
+    }
+
+    .mobile-auth-action-secondary {
+        grid-column: 1 / -1;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .topbar-area {
+        display: none;
+    }
+
+    #navbar-content {
+        top: calc(100% + 10px);
+        max-height: calc(100vh - 92px);
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .mobile-nav-actions {
+        grid-template-columns: 1fr;
+    }
+}

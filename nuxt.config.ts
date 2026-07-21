@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     baseUrl: process.env.NUXT_PUBLIC_API_BASE || 'http://api.dorset365.local',
     origin: process.env.NUXT_PUBLIC_FRONTEND_URL || 'http://dorset365.local',
     endpoints: {
-      user: '/user/confirmed-password-status'
+      user: '/user'
     },
     redirect: {
       onLogin: '/dashboard',

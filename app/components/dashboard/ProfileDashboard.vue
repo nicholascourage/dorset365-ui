@@ -93,11 +93,79 @@
                             </form>
                         </div>
                     </div>
+
+                    <div class="dashboard_common_table profile_security_card">
+                        <div class="profile_security_heading">
+                            <div>
+                                <span class="profile_security_label">Account security</span>
+                                <h3>Two-factor authentication</h3>
+                            </div>
+                            <span class="two_factor_status" :class="isTwoFactorEnabled ? 'is-enabled' : 'is-disabled'">
+                                <i class="fas" :class="isTwoFactorEnabled ? 'fa-check-circle' : 'fa-minus-circle'"></i>
+                                {{ isTwoFactorEnabled ? 'Enabled' : 'Not enabled' }}
+                            </span>
+                        </div>
+
+                        <div v-if="statusMessage" class="alert" :class="statusMessage.type" role="status">
+                            {{ statusMessage.text }}
+                        </div>
+
+                        <div class="profile_security_content">
+                            <div class="profile_security_icon" aria-hidden="true">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div>
+                                <p v-if="isTwoFactorEnabled">
+                                    Your account requires a code from your authenticator app when you sign in.
+                                </p>
+                                <p v-else>
+                                    Add an extra security check to protect your account if your password is compromised.
+                                </p>
+                                <NuxtLink v-if="isTwoFactorEnabled" class="btn btn_border btn_md" to="/auth/disable">
+                                    Manage two-factor authentication
+                                </NuxtLink>
+                                <NuxtLink v-else class="btn btn_theme btn_md" to="/auth/enable">
+                                    Enable two-factor authentication
+                                </NuxtLink>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 </template>
+<script setup>
+const route = useRoute()
+const user = useSanctumUser()
+
+const isTwoFactorEnabled = computed(() => {
+    if (route.query['two-factor'] === 'enabled') return true
+    if (route.query['two-factor'] === 'disabled') return false
+
+    return Boolean(user.value?.two_factor_confirmed_at || user.value?.two_factor_enabled)
+})
+
+const statusMessage = computed(() => {
+    const status = route.query['two-factor']
+
+    if (status === 'enabled') {
+        return { type: 'alert-success', text: 'Two-factor authentication is now enabled.' }
+    }
+    if (status === 'disabled') {
+        return { type: 'alert-success', text: 'Two-factor authentication has been disabled.' }
+    }
+    if (status === 'already-enabled') {
+        return { type: 'alert-info', text: 'Two-factor authentication is already enabled.' }
+    }
+    if (status === 'not-enabled') {
+        return { type: 'alert-info', text: 'Two-factor authentication is not currently enabled.' }
+    }
+
+    return null
+})
+</script>
+
 <script>
 import LogoutBtn from '@/components/dashboard/LogoutBtn.vue'
 import MyBookingOption from '@/components/dashboard/MyBookingOption.vue'

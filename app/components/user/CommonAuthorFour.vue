@@ -47,7 +47,9 @@ defineOptions({
     name: 'CommonAuthorFour',
 })
 
-const { login } = useSanctumAuth()
+const sanctumClient = useSanctumClient()
+const { refreshIdentity } = useSanctumAuth()
+const route = useRoute()
 
 const form = reactive({
     email: '',
@@ -90,18 +92,27 @@ const submitLogin = async () => {
     isSubmitting.value = true
 
     try {
-        await login(
-            {
+        const response = await sanctumClient('/login', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+            },
+            body: {
                 email: form.email,
                 password: form.password,
             },
-            true,
-            {
-                headers: {
-                    Accept: 'application/json',
-                },
-            },
-        )
+        })
+
+        if (response?.two_factor) {
+            await navigateTo({
+                path: '/auth/challenge',
+                query: route.query.redirect ? { redirect: route.query.redirect } : undefined,
+            })
+            return
+        }
+
+        await refreshIdentity()
+        await navigateTo(typeof route.query.redirect === 'string' ? route.query.redirect : '/dashboard')
     } catch (error) {
         const data = error?.data || {}
         setFieldErrors(data.errors)

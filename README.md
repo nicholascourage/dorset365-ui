@@ -78,6 +78,25 @@ bun run dev
 
 ## Production
 
+Set both public origins before building the application. They must use HTTPS
+when the frontend is served over HTTPS:
+
+```env
+NUXT_PUBLIC_API_BASE=https://<staging-api-host>
+NUXT_PUBLIC_FRONTEND_URL=https://staging.dorset365.com
+```
+
+If the values are supplied only when starting an already-built Nitro server,
+use the nested runtime key expected by `nuxt-auth-sanctum` as well:
+
+```env
+NUXT_PUBLIC_SANCTUM_BASE_URL=https://<staging-api-host>
+NUXT_PUBLIC_SANCTUM_ORIGIN=https://staging.dorset365.com
+```
+
+The production build deliberately fails if the API URL still points at a
+`.local` hostname, preventing an unusable local URL from being published.
+
 Build the application for production:
 
 ```bash

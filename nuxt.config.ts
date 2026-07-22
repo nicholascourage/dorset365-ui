@@ -1,4 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const localApiBase = 'http://api.dorset365.local'
+const localFrontendUrl = 'http://dorset365.local'
+
+const apiBase = process.env.NUXT_PUBLIC_API_BASE || localApiBase
+const frontendUrl = process.env.NUXT_PUBLIC_FRONTEND_URL || localFrontendUrl
+
+if (process.env.NODE_ENV === 'production') {
+  const apiUrl = new URL(apiBase)
+
+  if (apiUrl.protocol !== 'https:' || apiUrl.hostname.endsWith('.local')) {
+    throw new Error(
+      'NUXT_PUBLIC_API_BASE must be set to the HTTPS Laravel API URL for production builds.'
+    )
+  }
+}
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
@@ -15,7 +31,13 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://api.dorset365.local'
+      apiBase,
+      // nuxt-auth-sanctum consumes this runtime config. In a deployed Nitro
+      // server it can be overridden with NUXT_PUBLIC_SANCTUM_BASE_URL.
+      sanctum: {
+        baseUrl: apiBase,
+        origin: frontendUrl,
+      },
     }
   },
 
@@ -28,8 +50,8 @@ export default defineNuxtConfig({
   modules: ['nuxt-auth-sanctum'],
 
   sanctum: {
-    baseUrl: process.env.NUXT_PUBLIC_API_BASE || 'http://api.dorset365.local',
-    origin: process.env.NUXT_PUBLIC_FRONTEND_URL || 'http://dorset365.local',
+    baseUrl: apiBase,
+    origin: frontendUrl,
     endpoints: {
       user: '/user'
     },

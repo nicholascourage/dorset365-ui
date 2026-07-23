@@ -6,8 +6,7 @@
                 <div class="col-lg-8 offset-lg-2">
                     <div class="common_author_boxed">
                         <div class="common_author_heading">
-                            <h3>Login your account</h3>
-                            <h2>Logged in to stay in touch</h2>
+                            <h2>Account Login</h2>
                         </div>
                         <div class="common_author_form">
                             <form id="main_author_form" @submit.prevent="submitLogin">

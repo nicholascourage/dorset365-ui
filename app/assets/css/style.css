@@ -4562,7 +4562,11 @@ textarea {
 }
 
 .common_author_form {
-    padding: 50px 100px 0px 100px;
+    padding: 50px clamp(20px, 5vw, 56px) 0;
+}
+
+#main_author_form .form-control {
+    width: 100%;
 }
 
 #main_author_form .form-group {
@@ -4586,6 +4590,10 @@ textarea {
 
 .common_form_submit {
     padding-top: 20px;
+}
+
+.common_form_submit .btn {
+    width: 100%;
 }
 
 .have_acount_area {

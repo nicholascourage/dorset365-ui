@@ -492,9 +492,6 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="nav-item">
-                                        <NuxtLink to="/company/contact" class="nav-link">Contact</NuxtLink>
-                                    </li>
                                 </ul>
                                 <div class="others-options d-flex align-items-center">
                                     <div class="option-item">

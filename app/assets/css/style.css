@@ -4561,6 +4561,77 @@ textarea {
     padding-top: 15px;
 }
 
+.login_author_area {
+    padding-top: 220px;
+}
+
+.login_author_boxed .common_author_form {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.login_author_boxed .common_author_heading h1 {
+    color: var(--black-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 40px;
+}
+
+.login_submit_button::before {
+    display: none;
+}
+
+.login_submit_button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--main-color);
+    border-color: var(--main-color);
+    transition: background-color 240ms ease, color 240ms ease, border-color 240ms ease;
+}
+
+.login_submit_button i {
+    font-size: 20px;
+}
+
+.login_progress_spinner {
+    width: 22px;
+    height: 22px;
+    border: 3px solid rgba(255, 255, 255, 0.35);
+    border-top-color: var(--white-color);
+    border-radius: 50%;
+    animation: loginProgressSpin 700ms linear infinite;
+}
+
+@keyframes loginProgressSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.login_submit_button:hover,
+.login_submit_button:focus-visible {
+    color: var(--white-color);
+    background: var(--black-color);
+    border-color: var(--black-color);
+}
+
+.login_submit_button:active,
+.login_submit_button:active:focus,
+.login_submit_button:disabled {
+    color: var(--white-color);
+    background: var(--main-color);
+    border-color: var(--main-color);
+    box-shadow: none;
+    opacity: 1;
+    transform: none;
+}
+
 .common_author_form {
     padding: 50px clamp(20px, 5vw, 56px) 0;
 }
@@ -5931,6 +6002,10 @@ textarea {
         display: block !important;
     }
 
+    .login_author_area {
+        padding-top: 180px;
+    }
+
     .topbar-area {
         border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
@@ -6258,6 +6333,10 @@ textarea {
 @media only screen and (max-width: 767px) {
     .topbar-area {
         display: none;
+    }
+
+    .login_author_area {
+        padding-top: 130px;
     }
 
     #navbar-content {

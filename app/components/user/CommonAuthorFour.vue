@@ -1,12 +1,14 @@
 <template>
 
-    <section id="common_author_area" class="section_padding">
+    <section id="common_author_area" class="section_padding login_author_area">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
-                    <div class="common_author_boxed">
+                    <div class="common_author_boxed login_author_boxed">
                         <div class="common_author_heading">
-                            <h2>Account Login</h2>
+                            <h1>
+                                <span>Account Login</span>
+                            </h1>
                         </div>
                         <div class="common_author_form">
                             <form id="main_author_form" @submit.prevent="submitLogin">
@@ -25,8 +27,14 @@
                                     <NuxtLink to="/auth/forgot-password">Forgot password?</NuxtLink>
                                 </div>
                                 <div class="common_form_submit">
-                                    <button class="btn btn_theme btn_md" type="submit" :disabled="isSubmitting">
-                                        {{ isSubmitting ? 'Logging in...' : 'Log in' }}
+                                    <button class="btn btn_theme btn_md login_submit_button" type="submit"
+                                        :disabled="isSubmitting"
+                                        :aria-label="isSubmitting ? 'Logging in' : 'Login'">
+                                        <span v-if="isSubmitting" class="login_progress_spinner" aria-hidden="true"></span>
+                                        <template v-else>
+                                            <span>Login</span>
+                                            <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                                        </template>
                                     </button>
                                 </div>
                                 <div class="have_acount_area">

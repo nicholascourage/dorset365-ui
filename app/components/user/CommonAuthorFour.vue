@@ -27,10 +27,10 @@
                                     <NuxtLink to="/auth/forgot-password">Forgot password?</NuxtLink>
                                 </div>
                                 <div class="common_form_submit">
-                                    <button class="btn btn_theme btn_md login_submit_button" type="submit"
+                                    <button class="btn btn_theme btn_md auth_submit_button" type="submit"
                                         :disabled="isSubmitting"
                                         :aria-label="isSubmitting ? 'Logging in' : 'Login'">
-                                        <span v-if="isSubmitting" class="login_progress_spinner" aria-hidden="true"></span>
+                                        <span v-if="isSubmitting" class="auth_progress_spinner" aria-hidden="true"></span>
                                         <template v-else>
                                             <span>Login</span>
                                             <i class="fas fa-sign-in-alt" aria-hidden="true"></i>

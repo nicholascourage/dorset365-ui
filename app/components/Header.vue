@@ -25,7 +25,7 @@
                         <div class="col-lg-6 col-md-6">
                             <ul class="topbar-others-options">
                                 <li v-if="!isAuthenticated"><NuxtLink to="/auth/login">Login</NuxtLink></li>
-                                <li v-if="!isAuthenticated"><NuxtLink to="/auth/register">Sign up</NuxtLink></li>
+                                <li v-if="!isAuthenticated"><NuxtLink to="/auth/register">Register</NuxtLink></li>
                                 <li v-if="isAuthenticated">
                                     <button type="button" class="logout-link" @click="logout">Logout</button>
                                 </li>

@@ -4561,7 +4561,8 @@ textarea {
     padding-top: 15px;
 }
 
-.login_author_area {
+.login_author_area,
+.register_author_area {
     padding-top: 220px;
 }
 
@@ -4581,11 +4582,18 @@ textarea {
     line-height: 40px;
 }
 
-.login_submit_button::before {
+.register_author_boxed .common_author_heading h1 {
+    color: var(--black-color);
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 40px;
+}
+
+.auth_submit_button::before {
     display: none;
 }
 
-.login_submit_button {
+.auth_submit_button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -4595,35 +4603,35 @@ textarea {
     transition: background-color 240ms ease, color 240ms ease, border-color 240ms ease;
 }
 
-.login_submit_button i {
+.auth_submit_button i {
     font-size: 20px;
 }
 
-.login_progress_spinner {
+.auth_progress_spinner {
     width: 22px;
     height: 22px;
     border: 3px solid rgba(255, 255, 255, 0.35);
     border-top-color: var(--white-color);
     border-radius: 50%;
-    animation: loginProgressSpin 700ms linear infinite;
+    animation: authProgressSpin 700ms linear infinite;
 }
 
-@keyframes loginProgressSpin {
+@keyframes authProgressSpin {
     to {
         transform: rotate(360deg);
     }
 }
 
-.login_submit_button:hover,
-.login_submit_button:focus-visible {
+.auth_submit_button:hover,
+.auth_submit_button:focus-visible {
     color: var(--white-color);
     background: var(--black-color);
     border-color: var(--black-color);
 }
 
-.login_submit_button:active,
-.login_submit_button:active:focus,
-.login_submit_button:disabled {
+.auth_submit_button:active,
+.auth_submit_button:active:focus,
+.auth_submit_button:disabled {
     color: var(--white-color);
     background: var(--main-color);
     border-color: var(--main-color);
@@ -6002,7 +6010,8 @@ textarea {
         display: block !important;
     }
 
-    .login_author_area {
+    .login_author_area,
+    .register_author_area {
         padding-top: 180px;
     }
 
@@ -6335,7 +6344,8 @@ textarea {
         display: none;
     }
 
-    .login_author_area {
+    .login_author_area,
+    .register_author_area {
         padding-top: 130px;
     }
 

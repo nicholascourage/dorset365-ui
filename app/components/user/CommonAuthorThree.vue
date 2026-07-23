@@ -1,12 +1,11 @@
 <template>
-    <section id="common_author_area" class="section_padding">
+    <section id="common_author_area" class="section_padding register_author_area">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
-                    <div class="common_author_boxed">
+                    <div class="common_author_boxed register_author_boxed">
                         <div class="common_author_heading">
-                            <h3>Register account</h3>
-                            <h2>Register your account</h2>
+                            <h1>Register your account</h1>
                         </div>
                         <div class="common_author_form">
                             <form id="main_author_form" @submit.prevent="register">
@@ -40,8 +39,13 @@
                                         placeholder="Confirm password*" autocomplete="new-password" required />
                                 </div>
                                 <div class="common_form_submit">
-                                    <button class="btn btn_theme btn_md" type="submit" :disabled="isSubmitting">
-                                        {{ isSubmitting ? 'Registering...' : 'Register' }}
+                                    <button class="btn btn_theme btn_md auth_submit_button" type="submit"
+                                        :disabled="isSubmitting"
+                                        :aria-label="isSubmitting ? 'Registering' : 'Register'">
+                                        <span v-if="isSubmitting" class="auth_progress_spinner" aria-hidden="true"></span>
+                                        <template v-else>
+                                            <span>Register</span>
+                                        </template>
                                     </button>
                                 </div>
                                 <div class="have_acount_area other_author_option">

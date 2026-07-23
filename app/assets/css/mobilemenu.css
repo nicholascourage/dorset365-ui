@@ -66,7 +66,7 @@
 .navbar-toggler .hamburger-toggle .hamburger span:first-child {
     top: 0%;
     transform-origin: 50% 50%;
-    transform: translate(0% -50%) !important;
+    transform: translate(0, -50%);
 }
 
 .navbar-toggler .hamburger-toggle .hamburger span:nth-child(2) {
@@ -88,7 +88,7 @@
 
 .navbar-toggler .hamburger-toggle .hamburger.active span:first-child {
     top: 45%;
-    transform: rotate(45deg);
+    transform: translate(0, -50%) rotate(45deg);
 }
 
 .navbar-toggler .hamburger-toggle .hamburger.active span:nth-child(2) {
@@ -98,7 +98,8 @@
 
 .navbar-toggler .hamburger-toggle .hamburger.active span:last-child {
     top: 45%;
-    transform: rotate(-45deg);
+    bottom: auto;
+    transform: translate(0, -50%) rotate(-45deg);
 }
 
 .icons {

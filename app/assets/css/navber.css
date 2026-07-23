@@ -51,6 +51,32 @@
     padding-left: 5px;
 }
 
+.topbar-list .topbar-social-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar-list .topbar-social-links a {
+    display: inline-flex;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.topbar-list .topbar-social-links i {
+    padding-left: 0;
+}
+
+.topbar-list .topbar-social-links .social-x-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+}
+
 .topbar-others-options {
     padding: 0;
     margin-bottom: 0;

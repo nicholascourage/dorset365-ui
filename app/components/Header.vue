@@ -7,14 +7,19 @@
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6">
                             <ul class="topbar-list">
-                                <li>
+                                <li class="topbar-social-links">
                                     <a href="#!"><i class="fab fa-facebook"></i></a>
-                                    <a href="#!"><i class="fab fa-twitter-square"></i></a>
+                                    <a href="#!" aria-label="X">
+                                        <span class="social-x-icon" aria-hidden="true">X</span>
+                                    </a>
                                     <a href="#!"><i class="fab fa-instagram"></i></a>
                                     <a href="#!"><i class="fab fa-linkedin"></i></a>
                                 </li>
-                                <li><a href="#!"><span>+011 234 567 89</span></a></li>
-                                <li><a href="#!"><span>contact@domain.com</span></a></li>
+                                <li>
+                                    <NuxtLink to="/company/contact" class="topbar-contact-link">
+                                        <span>Contact</span>
+                                    </NuxtLink>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-lg-6 col-md-6">
@@ -24,33 +29,15 @@
                                 <li v-if="isAuthenticated">
                                     <button type="button" class="logout-link" @click="logout">Logout</button>
                                 </li>
-                                <li>
-                                    <div class="dropdown language-option">
-                                        <select v-model="language">
-                                            <option value="English">English</option>
-                                            <option value="Arabic">Arabic</option>
-                                            <option value="French">French</option>
-                                        </select>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="dropdown language-option">
-
-                                        <select v-model="currency">
-                                            <option value="USD">USD</option>
-                                            <option value="BD">BD</option>
-                                            <option value="URO">URO</option>
-                                        </select>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Navbar Bar -->
-            <div class="navbar-area" :class="{ 'is-sticky': isSticky }">
-                <div class="main-responsive-nav">
+            <div class="navbar-area"
+                :class="{ 'is-sticky': isSticky, 'mobile-overlay-active': isMobileMenuOpen }">
+                <div class="main-responsive-nav" :class="{ 'mobile-menu-open': isMobileMenuOpen }">
                     <div class="container">
                         <div class="main-responsive-menu mean-container">
                             <nav class="navbar">
@@ -60,9 +47,9 @@
                                             <img :src="logoUrl" alt="Dorset365">
                                         </NuxtLink>
                                     </div>
-                                    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#navbar-content" aria-controls="navbar-content"
-                                        aria-expanded="false" aria-label="Toggle navigation">
+                                    <button class="navbar-toggler" type="button" aria-controls="navbar-content"
+                                        :aria-expanded="isMobileMenuOpen" aria-label="Toggle navigation"
+                                        @click.capture="handleMobileMenuToggle">
                                         <div class="hamburger-toggle">
                                             <div class="hamburger">
                                                 <span></span>
@@ -71,7 +58,9 @@
                                             </div>
                                         </div>
                                     </button>
-                                    <div class="collapse navbar-collapse mean-nav" id="navbar-content">
+                                    <Transition name="mobile-overlay">
+                                    <div v-show="isMobileMenuOpen"
+                                        class="navbar-collapse mean-nav mobile-menu-overlay" id="navbar-content">
                                         <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                                             <li class="nav-item dropdown">
                                                 <button type="button" class="dropdown-item dropdown-toggle"
@@ -300,6 +289,7 @@
                                                 class="mobile-auth-action mobile-auth-action-secondary">Advertise</NuxtLink>
                                         </div>
                                     </div>
+                                    </Transition>
                                 </div>
                             </nav>
                         </div>
@@ -330,7 +320,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            Attractions
+                                            Deals
                                             <i class="fas fa-angle-down"></i>
                                         </a>
                                         <ul class="dropdown-menu">
@@ -369,7 +359,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            Deals
+                                            Attractions
                                             <i class="fas fa-angle-down"></i>
                                         </a>
                                         <ul class="dropdown-menu">
@@ -551,15 +541,42 @@ export default {
     data() {
         return {
             logoUrl,
-            language: 'English',
-            currency: 'USD',
             isSticky: false,
+            isMobileMenuOpen: false,
         }
     },
 
     methods: {
         handleScroll() {
             this.isSticky = window.scrollY >= 200
+        },
+        setMobileMenuOpen(isOpen) {
+            if (isOpen) {
+                const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+                document.body.style.setProperty(
+                    '--mobile-menu-scrollbar-width',
+                    `${scrollbarWidth}px`,
+                )
+            }
+
+            this.isMobileMenuOpen = isOpen
+            document.body.classList.toggle('mobile-menu-active', isOpen)
+
+            if (!isOpen) {
+                document.body.style.removeProperty('--mobile-menu-scrollbar-width')
+            }
+        },
+        handleMobileMenuToggle() {
+            const hamburger = document.querySelector('.hamburger-toggle .hamburger')
+            const willOpen = !hamburger?.classList.contains('active')
+
+            hamburger?.classList.toggle('active', willOpen)
+
+            if (willOpen) {
+                this.setMobileMenuOpen(true)
+            } else {
+                this.closeMobileMenu()
+            }
         },
         closeMobileMenu() {
             const navbarContent = document.getElementById('navbar-content')
@@ -570,24 +587,15 @@ export default {
                 return
             }
 
-            if (window.bootstrap?.Collapse) {
-                const collapse = window.bootstrap.Collapse.getOrCreateInstance(navbarContent, {
-                    toggle: false,
-                })
-                collapse.hide()
-            } else {
-                navbarContent.classList.remove('show')
-            }
-
+            navbarContent.classList.remove('show', 'collapsing')
             hamburger?.classList.remove('active')
-            toggler?.classList.add('collapsed')
             toggler?.setAttribute('aria-expanded', 'false')
+            this.setMobileMenuOpen(false)
         },
         handleDocumentClick(e) {
             const hamburgerToggle = e.target.closest('.hamburger-toggle')
 
             if (hamburgerToggle) {
-                hamburgerToggle.querySelector('.hamburger')?.classList.toggle('active')
                 return
             }
 
@@ -596,6 +604,16 @@ export default {
             )
 
             if (mobileDestination) {
+                this.closeMobileMenu()
+            }
+        },
+        handleKeydown(e) {
+            if (e.key === 'Escape' && this.isMobileMenuOpen) {
+                this.closeMobileMenu()
+            }
+        },
+        handleResize() {
+            if (window.innerWidth >= 1200 && this.isMobileMenuOpen) {
                 this.closeMobileMenu()
             }
         },
@@ -608,13 +626,18 @@ export default {
     mounted() {
         this.handleScroll()
         window.addEventListener('scroll', this.handleScroll)
+        window.addEventListener('resize', this.handleResize)
         document.addEventListener('click', this.handleDocumentClick)
+        document.addEventListener('keydown', this.handleKeydown)
     },
 
     beforeUnmount() {
         window.removeEventListener('scroll', this.handleScroll)
+        window.removeEventListener('resize', this.handleResize)
         document.removeEventListener('click', this.handleDocumentClick)
+        document.removeEventListener('keydown', this.handleKeydown)
+        document.body.classList.remove('mobile-menu-active')
+        document.body.style.removeProperty('--mobile-menu-scrollbar-width')
     }
 }
 </script>
-

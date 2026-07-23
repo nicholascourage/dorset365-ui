@@ -19,7 +19,7 @@
 
 .topbar-others-options li .logout-link {
     color: var(--white-color);
-    font-size: 14px;
+    font-size: 18px !important;
     font-weight: 500;
     padding: 0;
 }
@@ -27,9 +27,25 @@
 .topbar-others-options li a:hover,
 .topbar-others-options li a:focus,
 .topbar-others-options li .logout-link:hover,
-.topbar-others-options li .logout-link:focus {
+.topbar-others-options li .logout-link:focus,
+.topbar-list li .topbar-contact-link:hover,
+.topbar-list li .topbar-contact-link:focus {
     color: var(--white-color) !important;
     text-decoration: underline;
+}
+
+.topbar-list li .topbar-contact-link {
+    color: var(--white-color);
+    font-size: 18px !important;
+    font-weight: 500;
+}
+
+.topbar-others-options li a {
+    font-size: 18px !important;
+}
+
+.main-navbar .navbar .navbar-nav > .nav-item > .nav-link {
+    font-size: 20px;
 }
 
 .main-navbar .navbar .navbar-nav .nav-item .dropdown-menu li .logout-link.dropdown-item,

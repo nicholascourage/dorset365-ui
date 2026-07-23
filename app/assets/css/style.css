@@ -5927,6 +5927,10 @@ textarea {
         padding-right: var(--mobile-menu-scrollbar-width, 0);
     }
 
+    .main-responsive-nav.main-navbar.unified-navigation {
+        display: block !important;
+    }
+
     .topbar-area {
         border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }

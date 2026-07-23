@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header class="main_header_arae">
+        <header class="main_header_arae" :class="{ 'is-sticky': isSticky }">
             <!-- Top Bar -->
             <div class="topbar-area">
                 <div class="container">
@@ -35,8 +35,7 @@
                 </div>
             </div>
             <!-- Navbar Bar -->
-            <div class="navbar-area"
-                :class="{ 'is-sticky': isSticky, 'mobile-overlay-active': isMobileMenuOpen }">
+            <div class="navbar-area" :class="{ 'mobile-overlay-active': isMobileMenuOpen }">
                 <div class="main-responsive-nav" :class="{ 'mobile-menu-open': isMobileMenuOpen }">
                     <div class="container">
                         <div class="main-responsive-menu mean-container">
@@ -305,7 +304,7 @@
                             <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <NuxtLink to="/" class="nav-link active">
+                                        <NuxtLink to="/" class="nav-link">
                                             Events
                                             <i class="fas fa-angle-down"></i>
                                         </NuxtLink>
@@ -520,6 +519,12 @@
                 </div>
             </div>
         </header>
+        <Transition name="back-to-top">
+            <button v-show="isSticky" type="button" class="back-to-top"
+                aria-label="Back to top" @click="scrollToTop">
+                <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            </button>
+        </Transition>
     </div>
 </template>
 <script>
@@ -546,6 +551,14 @@ export default {
     methods: {
         handleScroll() {
             this.isSticky = window.scrollY >= 200
+        },
+        scrollToTop() {
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+            window.scrollTo({
+                top: 0,
+                behavior: reduceMotion ? 'auto' : 'smooth',
+            })
         },
         setMobileMenuOpen(isOpen) {
             if (isOpen) {

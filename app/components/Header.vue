@@ -29,6 +29,9 @@
                                 <li v-if="isAuthenticated">
                                     <button type="button" class="logout-link" @click="logout">Logout</button>
                                 </li>
+                                <li v-if="isAuthenticated">
+                                    <NuxtLink to="/dashboard">My Account</NuxtLink>
+                                </li>
                             </ul>
                         </div>
                     </div>
